@@ -5,7 +5,7 @@ const ip = require("ip");
 import router from "./routes";
 import connect from "./db/connection";
 const passport = require("passport");
-import ghStrategy from "./githubStrategy";
+import ghStrategy from "./passport/githubStrategy";
 
 const cors = require("cors");
 
