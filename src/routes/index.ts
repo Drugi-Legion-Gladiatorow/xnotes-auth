@@ -1,9 +1,7 @@
 import { Router, Request, Response } from 'express';
 const ip = require('ip');
 const passport = require('passport');
-
-// dbmodel
-// import Reports from '../db/report.model'
+const path = require('path');
 
 const router = Router();
 
@@ -15,15 +13,17 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/login', async (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+
 router.get('/auth', passport.authenticate('github'));
 
 router.get(
   '/auth/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function (req: any, res) {
-    // Successful authentication, redirect home.
-    console.log(req.user);
-    res.redirect('/');
+    res.json(req.user);
   }
 );
 export default router;

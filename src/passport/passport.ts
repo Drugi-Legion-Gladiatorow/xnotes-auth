@@ -1,13 +1,13 @@
 import ghStrategy from './githubStrategy';
-const User = require('../model/User');
+import User, { IUser } from '../model/User';
 const passport = require('passport');
 
-passport.serializeUser((user: any, cb: any) => {
+passport.serializeUser((user: IUser, cb: any) => {
   cb(null, user.githubId);
 });
 
-passport.deserializeUser((id: any, cb: any) => {
-  User.findOne({ githubId: id }, (err: any, user: any) => {
+passport.deserializeUser((id: string, cb: any) => {
+  User.findOne({ githubId: id }, (err: any, user: IUser) => {
     cb(err, user);
   });
 });
