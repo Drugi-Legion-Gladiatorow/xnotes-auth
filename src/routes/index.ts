@@ -5,18 +5,6 @@ const path = require("path");
 
 const router = Router();
 
-// router.get("/", async (req: Request, res: Response) => {
-//   try {
-//     return res.json({ name: "auth", ip: ip.address() });
-//   } catch (error) {
-//     return res.json({ error: error.message });
-//   }
-// });
-// change gets to post
-// router.get("/login", async (req: Request, res: Response) => {
-//   res.sendFile(path.join(__dirname, "../public", "index.html"));
-// });
-
 router.post("/", passport.authenticate("github"));
 
 router.get(
