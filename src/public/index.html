@@ -1,3 +1,28 @@
-<button onClick="window.location.href='/auth'">
-  LOGIN
-</button>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XNotes login</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <main class="main">
+      <form class="login-form" action="auth" method="POST">
+        <h1>Welcome to XNotes</h1>
+        <p>PAAS app for programmers with big ideas</p>
+        <ul>
+          <li>Store files on your GitHub repo</li>
+          <li>Edit .md files in real time</li>
+          <li>Play video and audio files</li>
+          <li>and much more...</li>
+        </ul>
+        <p class="t-center">You need to log in to continue</p>
+        <button class="btn btn-gh" onClick="window.location.href='/auth'">
+          <img class="icon-gh" src="./gh-icon.svg" />Login with Github
+        </button>
+      </form>
+    </main>
+  </body>
+</html>
