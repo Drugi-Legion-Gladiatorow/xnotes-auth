@@ -9,11 +9,10 @@
 
 ## endpoints
 
-`/`
-service's data
+GET `/` - show log in page
 
-`/auth`
-redirects to github authorization page and responds with a json of userdata
+POST `/` - go to github authorization page
 
-`/login`
-button test
+userdata is passed as a query string to `/success` after logging in
+
+failed login redirects back to `/`
