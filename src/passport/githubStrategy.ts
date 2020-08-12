@@ -1,17 +1,34 @@
-const passport = require("passport");
-var GitHubStrategy = require("passport-github").Strategy;
-
+const GitHubStrategy = require('passport-github').Strategy;
+const User = require('../model/User');
 const { OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET } = process.env;
 
-console.log(OAUTH_CLIENT_ID);
 const ghStrategy = new GitHubStrategy(
   {
     clientID: OAUTH_CLIENT_ID,
     clientSecret: OAUTH_CLIENT_SECRET,
-    callbackURL: "/auth/callback",
+    callbackURL: '/auth/callback',
   },
-  function (accessToken: string, refreshToken: string, profile: any, cb: any) {
-    return cb(null, profile);
+  (accessToken: string, refreshToken: string, profile: any, cb: any) => {
+    User.findOne({ githubId: profile.id }, (err: any, user: any) => {
+      console.log(accessToken);
+      if (err) return cb(err);
+      if (!user) {
+        user = new User({
+          githubId: profile.id,
+          accessToken: accessToken,
+          username: profile.username,
+          displayName: profile.displayName,
+        });
+        user.save((err: any) => {
+          return cb(err, user);
+        });
+      } else {
+        user.accessToken = accessToken;
+        user.save((err: any) => {
+          return cb(err, user);
+        });
+      }
+    });
   }
 );
 
