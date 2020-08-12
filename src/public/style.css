@@ -11,6 +11,9 @@ body {
   color: var(--c-gray-dark);
   padding: 0;
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 *,
@@ -20,7 +23,7 @@ body {
 }
 
 .main {
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,15 +55,20 @@ body {
   margin: 0.5rem 0.25rem;
 }
 
+.footer {
+  background-color: var(--c-primary);
+  color: var(--c-white);
+  font-size: 0.875rem;
+}
+
 .btn {
   border: none;
   background: none;
   display: flex;
-  margin: 0 auto;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  padding: 1rem 2rem;
+  padding: 1rem 3rem;
   border-radius: 0.5rem;
   font-weight: 600;
   background-color: var(--c-primary);
@@ -81,6 +89,10 @@ body {
 .icon-gh {
   height: 1.5rem;
   margin-right: 1rem;
+}
+
+.btn-center {
+  margin: 0 auto;
 }
 
 .t-center {
