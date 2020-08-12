@@ -10,7 +10,7 @@ export interface IUser extends mongoose.Document {
 }
 
 export interface IUserModel extends mongoose.Model<IUser> {
-  findOneOrCreate(accessToken: string, profile: any, cb: any): any;
+  findOneOrCreate<T>(accessToken: string, profile: any, cb: T): T;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -25,8 +25,7 @@ UserSchema.statics.findOneOrCreate = function findOneOrCreate(
   profile: any,
   cb: any
 ) {
-  this.findOne({ githubId: profile.id }, async (err: any, user: IUser) => {
-    console.log(cb);
+  this.findOne({ githubId: profile.id }, (err: any, user: IUser) => {
     if (err) return cb(err);
     user
       ? (user.accessToken = accessToken)
@@ -36,8 +35,9 @@ UserSchema.statics.findOneOrCreate = function findOneOrCreate(
           username: profile.username,
           displayName: profile.displayName,
         }));
-    const error = await user.save();
-    return cb(error, user);
+    user.save((err) => {
+      return cb(err, user);
+    });
   });
 };
 

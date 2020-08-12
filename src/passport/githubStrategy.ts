@@ -10,6 +10,7 @@ const ghStrategy = new GitHubStrategy(
   },
   (accessToken: string, refreshToken: string, profile: any, cb: any) => {
     User.findOneOrCreate(accessToken, profile, (err: any, user: IUser) => {
+      console.log(err);
       console.log(user);
       cb(err, user);
     });
