@@ -6,7 +6,7 @@ const ghStrategy = new GitHubStrategy(
   {
     clientID: OAUTH_CLIENT_ID,
     clientSecret: OAUTH_CLIENT_SECRET,
-    callbackURL: "/auth/callback",
+    callbackURL: "/callback",
   },
   (accessToken: string, refreshToken: string, profile: any, cb: any) => {
     User.findOne({ githubId: profile.id }, (err: any, user: IUser) => {
