@@ -23,7 +23,7 @@
 - MONGO_DB_PASSWORD= db_password
 - OAUTH_CLIENT_ID= your_oauth_client_id
 - OAUTH_CLIENT_SECRET= your_oauth_client_secret
-- OAUTH_CALLBACK_URL= sucessful_authentication_callback_url
+- OAUTH_CALLBACK_URL= successful_authentication_callback_url
 
 ## endpoints
 
