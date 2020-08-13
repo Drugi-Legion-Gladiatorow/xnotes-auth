@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../app.ts");
+import connect from "../db/connection";
 
 describe("Post endpoint", () => {
   it("should add a new user", async () => {
