@@ -31,6 +31,6 @@ GET `/` - show log in page
 
 POST `/` - go to github authorization page
 
-userdata is passed as a query string to `/success` after logging in
+userdata is passed as a query string to `OAUTH_CALLBACK_URL` from env variables after logging in
 
 failed login redirects back to `/`
