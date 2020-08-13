@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - '27017-27019:27017-27019'
+    env_file:
+      - db.env
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      net:
+
+  auth:
+    container_name: auth
+    build: .
+
+    depends_on:
+      - db
+
+    volumes:
+      - .:/app
+
+    ports:
+      - '5001:3000'
+
+    networks:
+      net:
+
+    env_file:
+      - auth.env
+
+networks:
+  net:
+    driver: bridge
+
+volumes:
+  mongo_db:
+  #auth:
