@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 
-type typeFindOneOrCreate = (accessToken: string, profile: any, cb: any) => any;
+type typeFindOneOrCreate = (accessToken: string, profile: any) => any;
+
+export interface IProfile {
+  id: string;
+  username: string;
+  displayName: string;
+  [propName: string]: any;
+}
 
 export interface IUser extends mongoose.Document {
   githubId: string;
@@ -10,7 +17,7 @@ export interface IUser extends mongoose.Document {
 }
 
 export interface IUserModel extends mongoose.Model<IUser> {
-  findOneOrCreate<T>(accessToken: string, profile: any, cb: T): T;
+  findOneOrCreate<T>(accessToken: string, profile: IProfile): T;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -20,25 +27,28 @@ const UserSchema = new mongoose.Schema({
   displayName: String,
 });
 
-UserSchema.statics.findOneOrCreate = function findOneOrCreate(
+UserSchema.statics.findOneOrCreate = async function findOneOrCreate(
   accessToken: string,
-  profile: any,
-  cb: any
+  profile: IProfile
 ) {
-  this.findOne({ githubId: profile.id }, (err: any, user: IUser) => {
-    if (err) return cb(err);
-    user
-      ? (user.accessToken = accessToken)
-      : (user = new User({
-          githubId: profile.id,
-          accessToken: accessToken,
-          username: profile.username,
-          displayName: profile.displayName,
-        }));
-    user.save((err) => {
-      return cb(err, user);
+  try {
+    const user = await this.findOne({ githubId: profile.id });
+    if (user) {
+      user.accessToken = accessToken;
+      return user.save();
+    }
+
+    const newUser = new User({
+      githubId: profile.id,
+      accessToken: accessToken,
+      username: profile.username,
+      displayName: profile.displayName,
     });
-  });
+    return newUser.save();
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
+  }
 };
 
 const User = mongoose.model<IUser, IUserModel>('User', UserSchema);
