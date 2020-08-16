@@ -2,11 +2,11 @@ import express, { Application } from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import { writeFileSync } from 'fs';
-const ip = require('ip');
 import router from './routes';
 import connect from './db/connection';
-const passport = require('./passport/passport');
 
+const ip = require('ip');
+const passport = require('./passport/passport');
 const cors = require('cors');
 
 function onInit() {

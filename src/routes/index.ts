@@ -1,9 +1,5 @@
 import { Router, Request, Response } from 'express';
-const ip = require('ip');
 const passport = require('passport');
-const path = require('path');
-const fetch = require('node-fetch');
-
 const router = Router();
 
 router.post('/', passport.authenticate('github'));

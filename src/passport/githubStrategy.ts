@@ -6,6 +6,7 @@ const ghStrategy = new GitHubStrategy(
   {
     clientID: OAUTH_CLIENT_ID,
     clientSecret: OAUTH_CLIENT_SECRET,
+    scope: 'repo',
     callbackURL: '/callback',
   },
   async (
