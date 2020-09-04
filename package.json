@@ -13,7 +13,7 @@
       "/node_modules/"
     ],
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
@@ -41,6 +41,7 @@
     "@types/mongoose": "^5.7.32",
     "@types/node": "^14.0.22",
     "@types/node-fetch": "^2.5.7",
+    "@types/supertest": "^2.0.10",
     "jest": "^26.4.0",
     "supertest": "^4.0.2",
     "ts-jest": "^26.2.0",
