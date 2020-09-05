@@ -1,5 +1,6 @@
 const passport = require("passport-strategy");
 const util = require("util");
+import User from "../model/User";
 
 const user = require("./mockUser");
 
@@ -18,7 +19,6 @@ function Strategy(name, cb) {
 
 util.inherits(Strategy, passport.Strategy);
 
-// Need 2 different users
 Strategy.prototype.authenticate = function () {
   this._cb(null, null, this._user, (error, user) => {
     this.success(user);
