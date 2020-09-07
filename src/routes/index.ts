@@ -19,7 +19,21 @@ router.get(
   }
 );
 
-router.get("/secret", (req: any, res) => {
+router.get(
+  "/test/login",
+  passport.authenticate(
+    "github",
+    {
+      // failureRedirect: "/",
+    },
+    async function (req: any, res: Response) {
+      res.status(200).send("ok");
+      // res.redirect("/test/secret");
+    }
+  )
+);
+
+router.get("/test/secret", (req: any, res) => {
   if (req.user) {
     res.status(200).send("OK");
   } else {

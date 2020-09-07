@@ -23,7 +23,7 @@ async function strategyCallback(
   cb: any
 ) {
   try {
-    console.log(profile);
+    // console.log(profile);
     const user = await User.findOneOrCreate(accessToken, profile);
     cb(null, user);
   } catch (err) {
