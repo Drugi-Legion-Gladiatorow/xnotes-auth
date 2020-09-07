@@ -19,26 +19,29 @@ router.get(
   }
 );
 
-router.get(
-  "/test/login",
-  passport.authenticate(
-    "github",
-    {
-      // failureRedirect: "/",
-    },
-    async function (req: any, res: Response) {
-      res.status(200).send("ok");
-      // res.redirect("/test/secret");
-    }
-  )
-);
+// TEST ROUTES
+if (process.env.NODE_ENV === "test") {
+  router.get(
+    "/test/login",
+    passport.authenticate(
+      "github",
+      {
+        failureRedirect: "/",
+      },
+      async function (req: any, res: Response) {
+        res.status(200).send("ok");
+        // res.redirect("/test/secret");
+      }
+    )
+  );
 
-router.get("/test/secret", (req: any, res) => {
-  if (req.user) {
-    res.status(200).send("OK");
-  } else {
-    res.status(403).send("Not authorized");
-  }
-});
+  router.get("/test/secret", (req: any, res) => {
+    if (req.user) {
+      res.status(200).send("OK");
+    } else {
+      res.status(403).send("Not authorized");
+    }
+  });
+}
 
 export default router;

@@ -34,11 +34,11 @@ async function strategyCallback(
 
 let strategy;
 switch (process.env.NODE_ENV) {
-  case "production":
-    strategy = ghStrategy(strategyCallback);
+  case "test":
+    strategy = new MockStrategy("github", strategyCallback);
     break;
   default:
-    strategy = new MockStrategy("github", strategyCallback);
+    strategy = ghStrategy(strategyCallback);
 }
 
 passport.use(strategy);

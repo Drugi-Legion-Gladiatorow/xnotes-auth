@@ -1,14 +1,9 @@
 const agent = require("supertest").agent;
 const app = require("../app.ts");
 
-const prepare = () => {
-  const httpServer = app.listen();
-  const request = agent(app);
-  return {
-    request,
-    httpServer,
-  };
-};
+export {};
+
+process.env.NODE_ENV = "test";
 
 const createAuthenticatedUser = (done) => {
   const httpServer = app.listen();
@@ -20,23 +15,21 @@ const createAuthenticatedUser = (done) => {
 };
 
 describe("Testing Auth microservice", () => {
-  jest.setTimeout(10000);
+  const request = agent(app);
 
-  test("Should respond with 403 when unauthorized visits a secret page", async function (done) {
+  test("Should respond with 403 when unauthorized visits a secret page", async function () {
     const res = await agent(app).get("/test/secret");
     expect(res.statusCode).toEqual(403);
-    done();
   });
   test("Should let user log in with valid data", async function (done) {
     // ----------------
-    // TODO this doesnt work, may be because of /callback route
-    // not returning any value or not redirecting using passport 'successRedirect' param
+    // TODO this doesnt work,
+    //  should go to /login first and then check if /secret is 200
+    // throws timeout when calling /login for some reason
     // ----------------
-    // const res = await request.post("/");
-    const res = await agent(app).get("/test/login");
-    expect(res.statusCode).toBe(200);
-    done();
-    // expect(res.statusCode).toEqual(200);
+    const res = await request.get("/test/login");
+
+    expect(res.statusCode).toEqual(200);
     // expect(authRes.statusCode).toEqual(200);
     // httpServer.close();
   });
