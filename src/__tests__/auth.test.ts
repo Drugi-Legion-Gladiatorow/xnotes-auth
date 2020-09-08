@@ -1,5 +1,6 @@
 const agent = require("supertest").agent;
 const app = require("../app.ts");
+const user = require("../passport/mockUser");
 
 export {};
 
