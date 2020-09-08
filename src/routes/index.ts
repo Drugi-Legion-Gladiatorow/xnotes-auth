@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "test") {
         failureRedirect: "/",
       },
       async function (req: any, res: Response) {
-        res.status(200).send("ok");
+        res.status(200).json(req.user);
         // res.redirect("/test/secret");
       }
     )

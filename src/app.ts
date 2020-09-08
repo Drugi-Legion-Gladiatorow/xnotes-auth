@@ -12,6 +12,8 @@ const cors = require("cors");
 const { NODE_ENV } = process.env;
 
 const app: Application = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -19,9 +21,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 writeFileSync("./shared/auth.json", JSON.stringify({ ip: ip.address() }));
 
-if (NODE_ENV !== "test") {
-  connect();
-}
+// if (NODE_ENV !== "test") {
+connect();
+// }
 app.use(passport.initialize());
 
 app.use(router);

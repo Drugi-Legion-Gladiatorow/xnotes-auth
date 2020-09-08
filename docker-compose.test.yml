@@ -15,7 +15,7 @@ services:
 
   auth:
     container_name: auth
-    build: ./tests
+    build: ./dockertest
 
     depends_on:
       - db
@@ -30,7 +30,7 @@ services:
       net:
 
     env_file:
-      - auth.env
+      - ./dockertest/auth.env
 
 networks:
   net:
