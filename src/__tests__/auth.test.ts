@@ -29,6 +29,7 @@ describe("Testing Auth microservice", () => {
     // throws timeout when calling /login for some reason
     // ----------------
     const res = await request.get("/test/login");
+    res.get("/test/secret");
 
     expect(res.statusCode).toEqual(200);
     // expect(authRes.statusCode).toEqual(200);

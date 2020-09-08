@@ -27,11 +27,9 @@ if (process.env.NODE_ENV === "test") {
       "github",
       {
         failureRedirect: "/",
+        successRedirect: "/test/secret",
       },
-      async function (req: any, res: Response) {
-        res.status(200).json(req.user);
-        // res.redirect("/test/secret");
-      }
+      async function (req: any, res: Response) {}
     )
   );
 
