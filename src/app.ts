@@ -9,11 +9,7 @@ const ip = require("ip");
 const passport = require("./passport/passport");
 const cors = require("cors");
 
-const { NODE_ENV } = process.env;
-
 const app: Application = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -21,19 +17,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 writeFileSync("./shared/auth.json", JSON.stringify({ ip: ip.address() }));
 
-if (NODE_ENV !== "test") {
-  connect();
-}
+connect();
 app.use(passport.initialize());
 
 app.use(router);
 
-if (NODE_ENV !== "test") {
-  app.listen(process.env.PORT || 3000, () => {
-    console.log(
-      `auth service is listening at port ${process.env.PORT || 3000}!`
-    );
-  });
-}
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`auth service is listening at port ${process.env.PORT || 3000}!`);
+});
 
 module.exports = app;

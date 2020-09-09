@@ -19,27 +19,24 @@ router.get(
   }
 );
 
-// TEST ROUTES
-if (process.env.NODE_ENV === "test") {
-  router.get(
-    "/test/login",
-    passport.authenticate(
-      "github",
-      {
-        failureRedirect: "/",
-        successRedirect: "/test/secret",
-      },
-      async function (req: any, res: Response) {}
-    )
-  );
-
-  router.get("/test/secret", (req: any, res) => {
-    if (req.user) {
-      res.status(200).send("OK");
-    } else {
-      res.status(403).send("Not authorized");
-    }
-  });
-}
+router.get("/fakelogin", (req: any, res: any) => {
+  const fakeUser = {
+    id: 2662706,
+    avatar: "https://avatars.githubusercontent.com/u/2662706?v=3",
+    username: "christian-fei",
+    _id: "fake",
+  };
+  req.session = req.session || {};
+  req.user = fakeUser;
+  req.session.user_tmp = fakeUser;
+  res.redirect("/secret");
+});
+router.get("/secret", (req: any, res) => {
+  if (req.user) {
+    res.status(201).send("ok");
+  } else {
+    res.status(403).send("not ok");
+  }
+});
 
 export default router;
