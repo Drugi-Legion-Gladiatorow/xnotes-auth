@@ -1,6 +1,8 @@
-import ghStrategy from './githubStrategy';
-import User, { IUser } from '../model/User';
-const passport = require('passport');
+import ghStrategy from "./githubStrategy";
+import User, { IUser } from "../model/User";
+
+const passport = require("passport");
+const MockStrategy = require("passport-mock-strategy");
 
 passport.serializeUser((user: IUser, cb: any) => {
   cb(null, user.githubId);
