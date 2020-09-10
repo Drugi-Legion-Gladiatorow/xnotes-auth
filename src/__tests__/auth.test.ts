@@ -1,9 +1,6 @@
-process.env = {
-  OAUTH_CLIENT_ID: '311091a136bb0a247d2e',
-  OAUTH_CLIENT_SECRET: '58f18c0e43fdc29e3013018494e0e51cf47576e0',
-  OAUTH_CALLBACK_URL: 'https://google.com',
-  NODE_ENV: 'test',
-};
+const dotenv = require('dotenv');
+dotenv.config({ path: './auth.env' });
+process.env.NODE_ENV = 'test';
 
 const request = require('supertest');
 const app = require('../app.ts');
