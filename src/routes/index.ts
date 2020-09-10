@@ -33,4 +33,12 @@ router.get('/secret', (req, res) => {
   }
 });
 
+router.get('/mock', passport.authenticate('mock'), (req, res) => {
+  if (req.user) {
+    res.status(201).send('ok');
+  } else {
+    res.status(403).send('not ok');
+  }
+});
+
 export default router;

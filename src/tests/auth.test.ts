@@ -17,12 +17,8 @@ describe('Post endpoint', () => {
     const res = await agent.get('/secret');
     expect(res.status).toEqual(403);
   });
-
-  it('should nosic szmate na twarzydsadasd', async (done) => {
-    const authUser = agent;
-    const resp1 = await authUser.get('/fakelogin/');
-    expect(resp1.status).toEqual(302);
-    const resp2 = await authUser.get('/secret');
-    expect(resp2.status).toEqual(200);
+  it('should throw 201 on authorized visit', async () => {
+    const res = await agent.get('/mock');
+    expect(res.status).toEqual(201);
   });
 });

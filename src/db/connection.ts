@@ -9,7 +9,6 @@ function connectWithMongoDb(): void {
   } = process.env;
   const connstring: string = `mongodb://${MONGO_DB_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_DB_HOST}:27017/${MONGO_DB_NAME}?authSource=admin`;
 
-  if (process.env.NODE_ENV === 'test') return;
   try {
     connect(connstring, {
       useNewUrlParser: true,

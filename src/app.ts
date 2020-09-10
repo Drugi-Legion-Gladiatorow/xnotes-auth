@@ -5,7 +5,7 @@ import { writeFileSync } from 'fs';
 import router from './routes';
 import connect from './db/connection';
 import passport from './passport/passport';
-
+import mockPassport from './tests/mockPassport';
 const ip = require('ip');
 const cors = require('cors');
 
@@ -17,8 +17,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 writeFileSync('./shared/auth.json', JSON.stringify({ ip: ip.address() }));
 
-connect();
-app.use(passport.initialize());
+if (process.env.NODE_ENV !== 'test') {
+  connect();
+  app.use(passport.initialize());
+} else {
+  app.use(mockPassport.initialize());
+}
 
 app.use(router);
 
