@@ -1,37 +1,20 @@
-import ghStrategy from "./githubStrategy";
-import User, { IUser, IProfile } from "../model/User";
+import ghStrategy from './githubStrategy';
+import User, { IUser } from '../model/User';
+import passport from 'passport';
 
-const passport = require("passport");
-const MockStrategy = require("passport-mock-strategy");
-
-passport.serializeUser((user: IUser, cb: any) => {
+passport.serializeUser<IUser, string>((user, cb) => {
   cb(null, user.githubId);
 });
 
-passport.deserializeUser(async (id: string, cb: any) => {
-  User.findOne({ githubId: id }, (err: any, user: IUser) => {
-    cb(err, user);
-  });
-});
-
-async function strategyCallback(
-  accessToken: string,
-  refreshToken: string,
-  profile: IProfile,
-  cb: any
-) {
+passport.deserializeUser<IUser | null, string>(async (id, cb) => {
   try {
-    // console.log(profile);
-    const user = await User.findOneOrCreate(accessToken, profile);
+    const user = await User.findOne({ githubId: id });
     cb(null, user);
   } catch (err) {
-    console.error(err);
     cb(err);
   }
-}
+});
 
-const strategy = ghStrategy(strategyCallback);
+passport.use(ghStrategy);
 
-passport.use(strategy);
-
-module.exports = passport;
+export default passport;

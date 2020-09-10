@@ -1,4 +1,4 @@
-import { connect } from "mongoose";
+import { connect } from 'mongoose';
 
 function connectWithMongoDb(): void {
   const {
@@ -9,20 +9,19 @@ function connectWithMongoDb(): void {
   } = process.env;
   const connstring: string = `mongodb://${MONGO_DB_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_DB_HOST}:27017/${MONGO_DB_NAME}?authSource=admin`;
 
-  if (process.env.NODE_ENV === "test") return;
+  if (process.env.NODE_ENV === 'test') return;
   try {
     connect(connstring, {
       useNewUrlParser: true,
-      // useUnifiedTopology: true
     })
       .then(() => {
         return console.info(`Successfully connected to mongo`);
       })
       .catch((error: Error) => {
-        console.error("Error connecting to database: ", error);
+        console.error('Error connecting to database: ', error);
       });
   } catch (error) {
-    console.error("connectWithMongoDb", error);
+    console.error('connectWithMongoDb', error);
   }
 }
 

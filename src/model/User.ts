@@ -1,13 +1,5 @@
 import mongoose from 'mongoose';
-
-type typeFindOneOrCreate = (accessToken: string, profile: any) => any;
-
-export interface IProfile {
-  id: string;
-  username: string;
-  displayName: string;
-  [propName: string]: any;
-}
+import { Profile } from 'passport-github';
 
 export interface IUser extends mongoose.Document {
   githubId: string;
@@ -17,7 +9,7 @@ export interface IUser extends mongoose.Document {
 }
 
 export interface IUserModel extends mongoose.Model<IUser> {
-  findOneOrCreate<T>(accessToken: string, profile: IProfile): T;
+  findOneOrCreate(accessToken: string, profile: Profile): Promise<IUser>;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -29,7 +21,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.statics.findOneOrCreate = async function findOneOrCreate(
   accessToken: string,
-  profile: IProfile
+  profile: Profile
 ) {
   try {
     const user = await this.findOne({ githubId: profile.id });
